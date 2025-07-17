@@ -1,0 +1,32 @@
+name: Build APK from ZIP
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 🗂️ Unzip SriDAW.zip
+        run: unzip SriDAW.zip -d SriDAW
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: 🔧 Make gradlew executable
+        run: chmod +x SriDAW/gradlew
+
+      - name: 🏗️ Build APK
+        working-directory: SriDAW
+        run: ./gradlew assembleDebug
+
+      - name: 📤 Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: SriDAW-APK
+          path: SriDAW/app/build/outputs/apk/debug/app-debug.apk
