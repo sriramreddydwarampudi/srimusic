@@ -1,4 +1,4 @@
-name: Build APK from ZIP
+name: Build APK from ZIP (No Local Machine Needed)
 
 on: [push]
 
@@ -7,26 +7,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: 🧾 Checkout repository
+        uses: actions/checkout@v3
 
-      - name: 🗂️ Unzip SriDAW.zip
+      - name: 🗂️ Unzip the project
         run: unzip SriDAW.zip -d SriDAW
 
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'temurin'
-
-      - name: 🔧 Make gradlew executable
-        run: chmod +x SriDAW/gradlew
+      - name: 🧱 Initialize Gradle wrapper
+        working-directory: SriDAW
+        run: |
+          mkdir -p gradle/wrapper
+          echo "distributionUrl=https\\://services.gradle.org/distributions/gradle-7.4.2-all.zip" > gradle/wrapper/gradle-wrapper.properties
+          curl -sL https://services.gradle.org/distributions/gradle-7.4.2-all.zip -o gradle-wrapper.zip
+          unzip gradle-wrapper.zip -d gradle-wrapper-unpacked
+          cp gradle-wrapper-unpacked/gradle-7.4.2/bin/gradle gradlew
+          chmod +x gradlew
 
       - name: 🏗️ Build APK
         working-directory: SriDAW
         run: ./gradlew assembleDebug
 
-      - name: 📤 Upload APK
-        uses: actions/upload-artifact@v4
+      - name: 📦 Upload APK
+        uses: actions/upload-artifact@v3
         with:
           name: SriDAW-APK
           path: SriDAW/app/build/outputs/apk/debug/app-debug.apk
