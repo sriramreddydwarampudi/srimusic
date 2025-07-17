@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - name: 🧾 Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 🗂️ Unzip the project
         run: unzip SriDAW.zip -d SriDAW
@@ -28,7 +28,7 @@ jobs:
         run: ./gradlew assembleDebug
 
       - name: 📦 Upload APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: SriDAW-APK
           path: SriDAW/app/build/outputs/apk/debug/app-debug.apk
