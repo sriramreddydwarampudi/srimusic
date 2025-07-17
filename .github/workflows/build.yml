@@ -1,4 +1,4 @@
-name: Build APK from ZIP (No Local Machine Needed)
+name: Build APK from ZIP
 
 on: [push]
 
@@ -7,20 +7,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🧾 Checkout repository
+      - name: 📥 Checkout
         uses: actions/checkout@v4
 
-      - name: 🗂️ Unzip the project
+      - name: 🗂️ Unzip ZIP
         run: unzip SriDAW.zip -d SriDAW
 
-      - name: 🧱 Initialize Gradle wrapper
+      - name: 🧱 Install system Gradle
+        uses: gradle/gradle-build-action@v4
+
+      - name: 🔧 Generate gradle wrapper
         working-directory: SriDAW
         run: |
-          mkdir -p gradle/wrapper
-          echo "distributionUrl=https\\://services.gradle.org/distributions/gradle-7.4.2-all.zip" > gradle/wrapper/gradle-wrapper.properties
-          curl -sL https://services.gradle.org/distributions/gradle-7.4.2-all.zip -o gradle-wrapper.zip
-          unzip gradle-wrapper.zip -d gradle-wrapper-unpacked
-          cp gradle-wrapper-unpacked/gradle-7.4.2/bin/gradle gradlew
+          gradle wrapper --gradle-version=7.4.2
           chmod +x gradlew
 
       - name: 🏗️ Build APK
