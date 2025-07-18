@@ -9,50 +9,35 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
-    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
-      - name: ☕ Setup JDK 8
-        uses: actions/setup-java@v3
+      - name: ☕ Setup JDK 11
+        uses: actions/setup-java@v4
         with:
-          java-version: '8'
+          java-version: '11'
           distribution: 'temurin'
 
       - name: 📱 Setup Android SDK
-        uses: android-actions/setup-android@v2
+        uses: android-actions/setup-android@v3
 
       - name: 🔧 Make Gradle Wrapper Executable
-        run: |
-          echo "Making gradlew executable..."
-          chmod +x ./gradlew
-          echo "✅ Gradle wrapper is now executable"
-
-      - name: 🏗️ Clean Project
-        run: |
-          echo "Cleaning previous build artifacts..."
-          ./gradlew clean
-          echo "✅ Project cleaned successfully"
+        run: chmod +x ./gradlew
 
       - name: 🔨 Build Debug APK
-        run: |
-          echo "Starting APK build process..."
-          ./gradlew assembleDebug --info
-          echo "✅ APK build completed"
+        run: ./gradlew assembleDebug --stacktrace
 
       - name: 📋 Verify APK Creation
         run: |
-          echo "Checking if APK was created..."
           if [ -f "app/build/outputs/apk/debug/app-debug.apk" ]; then
-            echo "✅ APK found successfully!"
+            echo "✅ APK built successfully!"
             ls -la app/build/outputs/apk/debug/
-            echo "APK size: $(du -h app/build/outputs/apk/debug/app-debug.apk | cut -f1)"
           else
-            echo "❌ APK not found!"
-            find . -name "*.apk" -type f
+            echo "❌ APK not found"
             exit 1
           fi
 
@@ -61,10 +46,3 @@ jobs:
         with:
           name: SriMusic-APK
           path: app/build/outputs/apk/debug/app-debug.apk
-          retention-days: 30
-
-      - name: ✅ Build Summary
-        run: |
-          echo "🎉 Build completed successfully!"
-          echo "📱 APK artifact uploaded as 'SriMusic-APK'"
-          echo "⏰ Build finished at: $(date)"
