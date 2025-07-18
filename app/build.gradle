@@ -16,8 +16,6 @@ android {
         }
         
         python {
-            version "3.8"
-            
             pip {
                 install "kivy==2.1.0"
                 install "music21"
