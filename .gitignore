@@ -1,2 +1,4 @@
 node_modules/
 .env
+gradle-7.5/
+gradle-7.5-bin.zip
