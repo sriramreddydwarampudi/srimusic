@@ -32,6 +32,10 @@ def main():
     
     return "App started successfully"
 
+class SriMusicApp:
+    def run(self):
+        return main()
+
 if __name__ == '__main__':
     result = main()
     print(f"\n🎯 Result: {result}")
