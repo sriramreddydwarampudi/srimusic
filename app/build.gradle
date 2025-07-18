@@ -1,0 +1,57 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.chaquo.python'
+
+android {
+    compileSdkVersion 33
+    defaultConfig {
+        applicationId "com.srimusic.app"
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+        
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+
+        python {
+            buildPython "3.8"
+            
+            pip {
+                install "kivy==2.0.0"
+                install "music21"
+            }
+            
+            // Source directory for Python code
+            sourceDirs = ["$projectDir/../"]
+            
+            // Exclude unnecessary files
+            excludePathPatterns = [
+                "**/venv/**",
+                "**/.git/**",
+                "**/.github/**",
+                "**/build/**",
+                "**/dist/**",
+                "**/__pycache__/**",
+                "**/*.pyc"
+            ]
+        }
+    }
+    
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}
