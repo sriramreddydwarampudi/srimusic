@@ -2,7 +2,7 @@ name: Build APK with Chaquopy
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, add-chaquopy-build-workflow ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
@@ -32,16 +32,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install kivy==2.0.0 music21
 
-      - name: Grant execute permission for gradlew
+      - name: Download Gradle wrapper
         run: |
-          # Generate Gradle wrapper if it doesn't exist
-          if [ ! -f "./gradlew" ]; then
-            gradle wrapper
-          fi
-          chmod +x gradlew
+          mkdir -p gradle/wrapper
+          wget -O gradle/wrapper/gradle-wrapper.jar https://github.com/gradle/gradle/raw/master/gradle/wrapper/gradle-wrapper.jar
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleDebug --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4

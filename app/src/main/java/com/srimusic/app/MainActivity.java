@@ -1,12 +1,13 @@
 package com.srimusic.app;
 
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
-import org.kivy.android.PythonActivity;
 
-public class MainActivity extends PythonActivity {
+public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +19,8 @@ public class MainActivity extends PythonActivity {
         
         // Run the main.py script
         Python py = Python.getInstance();
-        PyObject pyModule = py.getModule("main");
+        PyObject mainModule = py.getModule("main");
+        PyObject mainActivity = mainModule.callAttr("SriMusicApp");
+        mainActivity.callAttr("run");
     }
 }

@@ -20,6 +20,8 @@ android {
             pip {
                 install "kivy==2.0.0"
                 install "music21"
+                install "jnius"
+                install "android"
             }
             
             // Source directory for Python code
@@ -53,5 +55,16 @@ android {
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/INDEX.LIST'
     }
+    
+    // Add namespace for newer Gradle versions
+    namespace "com.srimusic.app"
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'com.google.android.material:material:1.10.0'
 }
