@@ -18,7 +18,7 @@ android {
             buildPython "3.8"
             
             pip {
-                install "kivy==2.0.0"
+                install "kivy==2.1.0"
                 install "music21"
                 install "jnius"
                 install "android"
