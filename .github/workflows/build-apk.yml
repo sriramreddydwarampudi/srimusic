@@ -30,8 +30,11 @@ jobs:
       - name: 🔧 Make Gradle Wrapper Executable
         run: chmod +x ./gradlew
 
+      - name: 🧹 Clean Build Directory
+        run: ./gradlew clean
+
       - name: 🔨 Build Debug APK
-        run: ./gradlew assembleDebug --stacktrace
+        run: ./gradlew assembleDebug --stacktrace --no-daemon
 
       - name: 📋 Verify APK Creation
         run: |
