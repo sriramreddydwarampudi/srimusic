@@ -3,6 +3,7 @@ apply plugin: 'com.chaquo.python'
 
 android {
     compileSdkVersion 30
+    
     defaultConfig {
         applicationId "com.srimusic.app"
         minSdkVersion 21
@@ -24,7 +25,6 @@ android {
                 install "android"
             }
             
-            // Source directory for Python code
             srcDir "../"
         }
     }
@@ -47,9 +47,6 @@ android {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/INDEX.LIST'
     }
-    
-    // Remove namespace for older Gradle versions
-    // namespace "com.srimusic.app"
 }
 
 dependencies {
