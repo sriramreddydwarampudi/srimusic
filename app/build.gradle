@@ -17,9 +17,7 @@ android {
         
         python {
             pip {
-                install "kivy==2.1.0"
-                install "music21"
-                install "pyjnius"
+                install "kivy==2.0.0"
             }
             
             srcDir "../"
