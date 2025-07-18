@@ -1,2 +1,13 @@
 node_modules/
 .env
+gradle-7.5/
+gradle-7.5-bin.zip
+
+# Android build files
+.gradle/
+app/build/
+build/
+local.properties
+*.iml
+.idea/
+.DS_Store
