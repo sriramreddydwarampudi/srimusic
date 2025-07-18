@@ -1,0 +1,26 @@
+name: Simple Test
+
+on:
+  push:
+    branches: [ add-chaquopy-build-workflow ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Test Python
+        run: |
+          python3 --version
+          echo "✅ Python test passed!"
+      
+      - name: Test Java
+        run: |
+          java -version
+          echo "✅ Java test passed!"
+          
+      - name: Success
+        run: echo "🎉 All tests passed! Ready to build APK!"
