@@ -1,7 +1,5 @@
-plugins {
-    id 'com.android.application'
-    id 'com.chaquo.python'
-}
+apply plugin: 'com.android.application'
+apply plugin: 'com.chaquo.python'
 
 android {
     compileSdkVersion 33
@@ -15,9 +13,9 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
-
+        
         python {
-            buildPython "3.8"
+            version "3.8"
             
             pip {
                 install "kivy==2.1.0"
@@ -27,18 +25,15 @@ android {
             }
             
             // Source directory for Python code
-            sourceDirs = ["$projectDir/../"]
+            srcDir "../"
             
             // Exclude unnecessary files
-            excludePathPatterns = [
-                "**/venv/**",
-                "**/.git/**",
-                "**/.github/**",
-                "**/build/**",
-                "**/dist/**",
-                "**/__pycache__/**",
-                "**/*.pyc"
-            ]
+            excludeDir "**/venv"
+            excludeDir "**/.git"
+            excludeDir "**/.github"
+            excludeDir "**/build"
+            excludeDir "**/dist"
+            excludeDir "**/__pycache__"
         }
     }
     
@@ -55,9 +50,10 @@ android {
     }
     
     packagingOptions {
-        resources {
-            excludes += ['META-INF/LICENSE.txt', 'META-INF/NOTICE.txt', 'META-INF/DEPENDENCIES', 'META-INF/INDEX.LIST']
-        }
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/INDEX.LIST'
     }
     
     // Add namespace for newer Gradle versions
